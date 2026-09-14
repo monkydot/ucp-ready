@@ -1,5 +1,8 @@
 # ucp-ready
 
+[![CI](https://github.com/Monkydot/ucp-ready/actions/workflows/ci.yml/badge.svg)](https://github.com/Monkydot/ucp-ready/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
 Open-source readiness checker for **agentic commerce**. It audits a store's public
 [UCP](https://ucp.dev/) (Universal Commerce Protocol) discovery profile — and,
 where declared, its [AP2](https://ap2-protocol.org/) (Agent Payments Protocol)
@@ -21,6 +24,10 @@ npx ucp-ready check https://store.example.com
 # or, machine-readable:
 npx ucp-ready check https://store.example.com --json
 ```
+
+> Not on npm yet? Until the first npm release ships, install from source:
+> `git clone https://github.com/Monkydot/ucp-ready.git && cd ucp-ready && npm install && npm run build`,
+> then run `node dist/cli.js check <url>`.
 
 Exit code is `0` when the verdict is `ready`, non-zero (`1`) for `partial` or
 `not-ready` — safe to use as a CI gate.
@@ -56,6 +63,13 @@ or broken.
 verticals, exercising a live checkout/order flow, and cryptographic
 verification of a live AP2 mandate — this tool checks that AP2 support is
 *declared* correctly, not that a real transaction's signature verifies.
+
+## Contributing
+
+Contributions are welcome — see [`CONTRIBUTING.md`](./CONTRIBUTING.md) for
+the dev setup, validation gate, and the spec-grounding rule every check
+follows. This project follows the [Contributor Covenant](./CODE_OF_CONDUCT.md).
+See [`CHANGELOG.md`](./CHANGELOG.md) for release history.
 
 ## License
 
