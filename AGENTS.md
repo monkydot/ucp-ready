@@ -27,11 +27,12 @@ scope and `.ai/runs/` for active execution plans.
 
 ```bash
 npm run lint
-npm test
 npm run build
+npm test
 ```
 
-All three must pass before a PR is review-ready. See `SDLC.md` for the full
+Build must run before test: `test/cli.e2e.test.ts` spawns the compiled
+`dist/cli.js`. All three must pass before a PR is review-ready. See `SDLC.md` for the full
 ticket-to-merge process and `CODE_REVIEW.md` for review standards.
 
 ## Related documents
