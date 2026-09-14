@@ -67,6 +67,53 @@ describe('fetchUcpProfile', () => {
     if (!result.ok) expect(result.error.type).toBe('invalid-json');
   });
 
+  it('explains a redirect to an unrelated page as "no profile published", not a bare parse failure', async () => {
+    const fetchImpl = (async () => {
+      const response = new Response('<!DOCTYPE html><html>homepage</html>', {
+        status: 200,
+        headers: { 'content-type': 'text/html; charset=UTF-8' },
+      });
+      // A real fetch() sets these when it followed a redirect; simulate that
+      // here since `new Response()` cannot set them via its public API.
+      Object.defineProperty(response, 'redirected', { value: true, configurable: true });
+      Object.defineProperty(response, 'url', { value: 'https://store.example/', configurable: true });
+      return response;
+    }) as typeof fetch;
+
+    const result = await fetchUcpProfile('https://store.example', { fetchImpl });
+
+    expect(result.ok).toBe(false);
+    if (!result.ok) {
+      expect(result.error.type).toBe('invalid-json');
+      expect(result.error.message).toContain('redirected to https://store.example/');
+      expect(result.error.message).toContain('likely does not publish a UCP profile');
+    }
+  });
+
+  it('does not treat a same-path redirect (e.g. an HTTPS/www upgrade) as "redirected away"', async () => {
+    const fetchImpl = (async () => {
+      const response = new Response('not json', { status: 200 });
+      Object.defineProperty(response, 'redirected', { value: true, configurable: true });
+      Object.defineProperty(response, 'url', { value: 'https://store.example/.well-known/ucp', configurable: true });
+      return response;
+    }) as typeof fetch;
+
+    const result = await fetchUcpProfile('https://store.example', { fetchImpl });
+
+    expect(result.ok).toBe(false);
+    if (!result.ok) expect(result.error.message).not.toContain('redirected to');
+  });
+
+  it('names the actual content type when a non-redirected response is not JSON', async () => {
+    const fetchImpl = (async () =>
+      new Response('<html>404</html>', { status: 200, headers: { 'content-type': 'text/html' } })) as typeof fetch;
+
+    const result = await fetchUcpProfile('https://store.example', { fetchImpl });
+
+    expect(result.ok).toBe(false);
+    if (!result.ok) expect(result.error.message).toContain('"text/html"');
+  });
+
   it('reports a non-2xx HTTP response', async () => {
     const fetchImpl = (async () => new Response('nope', { status: 404 })) as typeof fetch;
     const result = await fetchUcpProfile('https://store.example', { fetchImpl });
