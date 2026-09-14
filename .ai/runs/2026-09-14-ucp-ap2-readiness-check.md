@@ -136,13 +136,13 @@ https://ucp.dev/latest/specification/payment/extensions/ap2-mandates/).
 
 ### Phase 4: AP2 readiness check + report assembly
 
-- [ ] 4.1 Implement AP2 mandate-extension readiness check
-- [ ] 4.2 Implement report aggregation (`buildReport`)
-- [ ] 4.3 Report assembly unit tests (ready / partial / not-ready)
+- [x] 4.1 Implement AP2 mandate-extension readiness check — 562381f
+- [x] 4.2 Implement report aggregation (`buildReport`) — 562381f
+- [x] 4.3 Report assembly unit tests (ready / partial / not-ready) — 562381f
 
 ### Phase 5: CLI + library wiring
 
-- [ ] 5.1 Public `checkReadiness(url)` library entry point
-- [ ] 5.2 `ucp-ready check <url>` CLI command with `--json` and exit codes
-- [ ] 5.3 README update reflecting real behavior
-- [ ] 5.4 End-to-end CLI test against a local fixture server
+- [x] 5.1 Public `checkReadiness(url)` library entry point — 218f362
+- [x] 5.2 `ucp-ready check <url>` CLI command with `--json` and exit codes — 218f362
+- [x] 5.3 README update reflecting real behavior — 218f362
+- [x] 5.4 End-to-end CLI test against a local fixture server — 218f362 (fixed validation-gate ordering it exposed — 893bccf)
