@@ -21,7 +21,7 @@
     "node": ">=20"
   },
   "bin": {
-    "ucp-ready": "./dist/cli.js"
+    "ucp-ready": "dist/cli.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
