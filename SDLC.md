@@ -140,8 +140,8 @@ The `om-auto-*` skills run this process unattended and are chainable: each accep
 Every PR passes the full validation gate before review sign-off, in this order:
 
 - `npm run lint`
-- `npm test`
 - `npm run build`
+- `npm test`
 
 Any non-zero exit fails the gate and blocks the PR. The implementing skills run the gate before opening a PR, and `om-check-and-commit` runs it before pushing a hand-worked branch. The command list lives in `.ai/agentic.config.json`; when it changes, update it there and in this section together.
 
