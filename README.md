@@ -1,5 +1,8 @@
 # ucp-ready
 
+[![CI](https://github.com/Monkydot/ucp-ready/actions/workflows/ci.yml/badge.svg)](https://github.com/Monkydot/ucp-ready/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
 Open-source readiness checker for **agentic commerce**. It audits a store's public
 [UCP](https://ucp.dev/) (Universal Commerce Protocol) discovery profile — and,
 where declared, its [AP2](https://ap2-protocol.org/) (Agent Payments Protocol)
@@ -21,6 +24,10 @@ npx ucp-ready check https://store.example.com
 # or, machine-readable:
 npx ucp-ready check https://store.example.com --json
 ```
+
+> Not on npm yet? Until the first npm release ships, install from source:
+> `git clone https://github.com/Monkydot/ucp-ready.git && cd ucp-ready && npm install && npm run build`,
+> then run `node dist/cli.js check <url>`.
 
 Exit code is `0` when the verdict is `ready`, non-zero (`1`) for `partial` or
 `not-ready` — safe to use as a CI gate.
@@ -52,10 +59,26 @@ const report = await checkReadiness('https://store.example.com');
 is missing or incomplete; `not-ready` means the UCP profile itself is missing
 or broken.
 
-**Not yet covered** (see the plan's Non-goals): the Lodging/Food UCP
-verticals, exercising a live checkout/order flow, and cryptographic
-verification of a live AP2 mandate — this tool checks that AP2 support is
-*declared* correctly, not that a real transaction's signature verifies.
+**Not yet covered** (see the plan's Non-goals — tracked as future work):
+the [Lodging/Food UCP verticals](https://github.com/Monkydot/ucp-ready/issues/2),
+[exercising a live checkout/order flow](https://github.com/Monkydot/ucp-ready/issues/3),
+and [cryptographic verification of a live AP2 mandate](https://github.com/Monkydot/ucp-ready/issues/4)
+— this tool checks that AP2 support is *declared* correctly, not that a real
+transaction's signature verifies.
+
+## Need help getting your store agentic-ready?
+
+`ucp-ready` is built and maintained by [Monkydot](https://monkydot.com), a
+software house building e-commerce systems. If you want a full audit,
+hands-on implementation of UCP/AP2 support, or a custom agentic-commerce
+integration for your store, [get in touch](https://monkydot.com).
+
+## Contributing
+
+Contributions are welcome — see [`CONTRIBUTING.md`](./CONTRIBUTING.md) for
+the dev setup, validation gate, and the spec-grounding rule every check
+follows. This project follows the [Contributor Covenant](./CODE_OF_CONDUCT.md).
+See [`CHANGELOG.md`](./CHANGELOG.md) for release history.
 
 ## License
 
