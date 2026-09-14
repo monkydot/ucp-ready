@@ -7,6 +7,25 @@ the minor version, per semver's `0.y.z` convention).
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-09-14
+
+### Added
+
+- OSS contribution hygiene: `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`
+  (Contributor Covenant), a `CHANGELOG.md` (this file), a CI/npm-version
+  README badge, and links to roadmap issues for the documented Non-goals.
+
+### Changed
+
+- Clearer diagnostics when `/.well-known/ucp` doesn't return JSON: names
+  the specific reason (redirected to an unrelated page, or the wrong
+  content-type) instead of a bare "did not return valid JSON" — the common
+  real-world case is a store with no UCP profile at all, whose server
+  redirects unknown paths to its homepage.
+- `VERSION` is now read from `package.json` at runtime instead of being
+  hardcoded a second time in `src/index.ts`, removing a source of version
+  drift at release time.
+
 ## [0.1.0] - 2026-09-14
 
 ### Added
@@ -34,5 +53,6 @@ the minor version, per semver's `0.y.z` convention).
   command at all. Caught via `npm publish --dry-run` before the first
   release.
 
-[Unreleased]: https://github.com/Monkydot/ucp-ready/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/Monkydot/ucp-ready/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/Monkydot/ucp-ready/releases/tag/v0.1.1
 [0.1.0]: https://github.com/Monkydot/ucp-ready/releases/tag/v0.1.0
