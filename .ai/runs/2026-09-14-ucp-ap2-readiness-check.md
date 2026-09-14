@@ -118,21 +118,21 @@ https://ucp.dev/latest/specification/payment/extensions/ap2-mandates/).
 
 ### Phase 1: Core types & UCP profile fetcher
 
-- [ ] 1.1 Define core types (`ReadinessReport`, `CheckResult`, `Severity`)
-- [ ] 1.2 Implement HTTPS profile fetcher with timeout + size cap
-- [ ] 1.3 Fetcher unit tests (success, non-HTTPS, timeout, oversized, invalid JSON, non-200)
+- [x] 1.1 Define core types (`ReadinessReport`, `CheckResult`, `Severity`) — c4f5e05
+- [x] 1.2 Implement HTTPS profile fetcher with timeout + size cap — c4f5e05
+- [x] 1.3 Fetcher unit tests (success, non-HTTPS, timeout, oversized, invalid JSON, non-200) — c4f5e05
 
 ### Phase 2: UCP profile structural validation
 
-- [ ] 2.1 Validate top-level profile shape
-- [ ] 2.2 Validate `keys[]` JWK Set
-- [ ] 2.3 Structural validation unit tests
+- [x] 2.1 Validate top-level profile shape — 3bf25bc
+- [x] 2.2 Validate `keys[]` JWK Set — 3bf25bc
+- [x] 2.3 Structural validation unit tests — 3bf25bc
 
 ### Phase 3: Schema-authority binding + declarations
 
-- [ ] 3.1 Implement schema-authority binding algorithm
-- [ ] 3.2 Validate services/capabilities per-entry fields
-- [ ] 3.3 Authority binding + declaration unit tests
+- [x] 3.1 Implement schema-authority binding algorithm — 3bf25bc
+- [x] 3.2 Validate services/capabilities per-entry fields — 88ef451
+- [x] 3.3 Authority binding + declaration unit tests — 88ef451
 
 ### Phase 4: AP2 readiness check + report assembly
 
