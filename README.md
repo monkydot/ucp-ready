@@ -1,6 +1,7 @@
 # ucp-ready
 
 [![CI](https://github.com/Monkydot/ucp-ready/actions/workflows/ci.yml/badge.svg)](https://github.com/Monkydot/ucp-ready/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/ucp-ready.svg)](https://www.npmjs.com/package/ucp-ready)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 Open-source readiness checker for **agentic commerce**. It audits a store's public
@@ -13,9 +14,11 @@ Built and maintained by [Monkydot](https://github.com/Monkydot).
 
 ## Status
 
-v0.1: static discovery-profile checks are implemented — this audits what a
-store *publishes*, not a live checkout/payment flow. See "What it checks"
-below for the exact scope, and `.ai/runs/` for the active execution plan.
+[v0.1.0 released](https://github.com/Monkydot/ucp-ready/releases/tag/v0.1.0):
+static discovery-profile checks are implemented — this audits what a store
+*publishes*, not a live checkout/payment flow. See "What it checks" below
+for the exact scope, and [`CHANGELOG.md`](./CHANGELOG.md) for release
+history.
 
 ## Usage
 
@@ -24,10 +27,6 @@ npx ucp-ready check https://store.example.com
 # or, machine-readable:
 npx ucp-ready check https://store.example.com --json
 ```
-
-> Not on npm yet? Until the first npm release ships, install from source:
-> `git clone https://github.com/Monkydot/ucp-ready.git && cd ucp-ready && npm install && npm run build`,
-> then run `node dist/cli.js check <url>`.
 
 Exit code is `0` when the verdict is `ready`, non-zero (`1`) for `partial` or
 `not-ready` — safe to use as a CI gate.
