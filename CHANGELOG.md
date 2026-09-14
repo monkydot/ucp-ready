@@ -7,6 +7,17 @@ the minor version, per semver's `0.y.z` convention).
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-09-14
+
+### Fixed
+
+- `dist/cli.js` was published without the executable bit set (`tsc` doesn't
+  preserve or set it), so `npx ucp-ready` / a global install failed with
+  `Permission denied` even though `node dist/cli.js` worked fine. The build
+  now `chmod`s the CLI entry to `0755` in a `postbuild` step; regression
+  covered by a test that executes the built file directly (not via `node`),
+  the same way `npx` invokes it.
+
 ## [0.1.1] - 2026-09-14
 
 ### Added
@@ -53,6 +64,7 @@ the minor version, per semver's `0.y.z` convention).
   command at all. Caught via `npm publish --dry-run` before the first
   release.
 
-[Unreleased]: https://github.com/Monkydot/ucp-ready/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/Monkydot/ucp-ready/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/Monkydot/ucp-ready/releases/tag/v0.1.2
 [0.1.1]: https://github.com/Monkydot/ucp-ready/releases/tag/v0.1.1
 [0.1.0]: https://github.com/Monkydot/ucp-ready/releases/tag/v0.1.0
