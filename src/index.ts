@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { checkAp2Readiness } from './checks/ap2.js';
 import { validateDeclarations } from './checks/declarations.js';
 import { validateProfileStructure } from './checks/structure.js';
@@ -5,7 +7,16 @@ import { fetchUcpProfile, type FetchProfileOptions } from './fetch-profile.js';
 import { buildReport } from './report.js';
 import type { CheckResult, ReadinessReport } from './types.js';
 
-export const VERSION = '0.1.0';
+/**
+ * Read from package.json at runtime rather than hardcoded, so it can't
+ * silently drift from the actual published version at each release.
+ * package.json sits one level up from this compiled dist/index.js.
+ */
+export const VERSION: string = (
+  JSON.parse(readFileSync(fileURLToPath(new URL('../package.json', import.meta.url)), 'utf8')) as {
+    version: string;
+  }
+).version;
 
 export { fetchUcpProfile } from './fetch-profile.js';
 export type { FetchProfileError, FetchProfileOptions, FetchProfileResult } from './fetch-profile.js';
