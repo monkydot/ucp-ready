@@ -10,36 +10,52 @@ Built and maintained by [Monkydot](https://github.com/Monkydot).
 
 ## Status
 
-Early scaffold — the checks themselves are not implemented yet. See the
-`runs/` directory for the active execution plan.
+v0.1: static discovery-profile checks are implemented — this audits what a
+store *publishes*, not a live checkout/payment flow. See "What it checks"
+below for the exact scope, and `.ai/runs/` for the active execution plan.
 
-## Planned usage
+## Usage
 
 ```bash
 npx ucp-ready check https://store.example.com
+# or, machine-readable:
+npx ucp-ready check https://store.example.com --json
 ```
+
+Exit code is `0` when the verdict is `ready`, non-zero (`1`) for `partial` or
+`not-ready` — safe to use as a CI gate.
 
 ```ts
 import { checkReadiness } from 'ucp-ready';
 
 const report = await checkReadiness('https://store.example.com');
+// { url, verdict: 'ready' | 'partial' | 'not-ready', checks: CheckResult[], fetchedAt }
 ```
 
-## What it will check
+## What it checks
 
 - **Discovery**: is `/.well-known/ucp` published, reachable over HTTPS, and valid JSON?
 - **Profile shape**: required `ucp.version`, `ucp.services`, `ucp.payment_handlers`,
   and `keys[]` (JWK Set, RFC 7517) fields.
-- **Schema authority binding**: every declared `schema`/`spec` URL must be
-  authority-bound to the capability's namespace, per the UCP spec's binding
+- **Schema authority binding**: every declared `schema` URL must be
+  authority-bound to its capability/service name, per the UCP spec's binding
   algorithm.
-- **Capability declarations**: services and capabilities (e.g. checkout,
-  identity linking, order) declare valid transports, versions, and schemas.
+- **Service & capability declarations**: each entry declares a valid
+  `version`, `spec`, `schema`, and (for services) `transport`/`endpoint`.
 - **AP2 readiness**: whether `dev.ucp.common.payment.ap2_mandate` is declared,
-  correctly `extends`-ing `dev.ucp.shopping.checkout`, with a valid
+  correctly `extends`-ing `dev.ucp.shopping.checkout`, with a non-empty
   `vp_formats_supported` config.
-- A scored, actionable report (`ready` / `partial` / `not-ready`) with
-  remediation guidance per failed check.
+- A scored, actionable verdict (`ready` / `partial` / `not-ready`) with
+  remediation guidance per failed or warned check.
+
+`partial` means the core UCP profile is valid but AP2 payment-mandate support
+is missing or incomplete; `not-ready` means the UCP profile itself is missing
+or broken.
+
+**Not yet covered** (see the plan's Non-goals): the Lodging/Food UCP
+verticals, exercising a live checkout/order flow, and cryptographic
+verification of a live AP2 mandate — this tool checks that AP2 support is
+*declared* correctly, not that a real transaction's signature verifies.
 
 ## License
 
