@@ -86,8 +86,43 @@ export async function fetchUcpProfile(
   try {
     return { ok: true, profile: JSON.parse(body) as unknown, sourceUrl: target.toString() };
   } catch {
-    return { ok: false, error: { type: 'invalid-json', message: `${target.toString()} did not return valid JSON.` } };
+    return { ok: false, error: { type: 'invalid-json', message: describeInvalidJson(response, target) } };
   }
+}
+
+/**
+ * A body that fails to parse as JSON is usually a store with no UCP profile
+ * at all, not an almost-valid document — most often the server redirected
+ * `/.well-known/ucp` to an unrelated page (its homepage, a login page, a
+ * catch-all 404) and that page's ordinary HTML got parsed as JSON. Naming
+ * that case explicitly is much clearer than a bare "invalid JSON".
+ */
+function describeInvalidJson(response: Response, target: URL): string {
+  const contentType = response.headers.get('content-type') ?? '';
+  const describedType = contentType ? `"${contentType}"` : 'an unknown content type';
+
+  let finalUrl: URL | undefined;
+  try {
+    finalUrl = response.url ? new URL(response.url) : undefined;
+  } catch {
+    finalUrl = undefined;
+  }
+
+  if (response.redirected && finalUrl && finalUrl.pathname !== target.pathname) {
+    return (
+      `${target.toString()} redirected to ${finalUrl.toString()} instead of returning a UCP profile ` +
+      `(got ${describedType}, not JSON) — this store likely does not publish a UCP profile at this path.`
+    );
+  }
+
+  if (!contentType.includes('json')) {
+    return (
+      `${target.toString()} responded with ${describedType} instead of JSON — ` +
+      'this store likely does not publish a UCP profile at this path.'
+    );
+  }
+
+  return `${target.toString()} did not return valid JSON.`;
 }
 
 /** Reads `response.body` up to `maxBytes`, returning `undefined` if exceeded. */
