@@ -26,5 +26,13 @@ the minor version, per semver's `0.y.z` convention).
 - Project scaffold: TypeScript/ESM, Vitest, ESLint flat config, GitHub
   Actions CI.
 
+### Fixed
+
+- `package.json`'s `bin` field used a `./`-prefixed path (`./dist/cli.js`),
+  which npm's publish validation silently strips, dropping the entire `bin`
+  mapping — the published package would have installed with no `ucp-ready`
+  command at all. Caught via `npm publish --dry-run` before the first
+  release.
+
 [Unreleased]: https://github.com/Monkydot/ucp-ready/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/Monkydot/ucp-ready/releases/tag/v0.1.0
