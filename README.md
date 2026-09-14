@@ -59,10 +59,19 @@ const report = await checkReadiness('https://store.example.com');
 is missing or incomplete; `not-ready` means the UCP profile itself is missing
 or broken.
 
-**Not yet covered** (see the plan's Non-goals): the Lodging/Food UCP
-verticals, exercising a live checkout/order flow, and cryptographic
-verification of a live AP2 mandate — this tool checks that AP2 support is
-*declared* correctly, not that a real transaction's signature verifies.
+**Not yet covered** (see the plan's Non-goals — tracked as future work):
+the [Lodging/Food UCP verticals](https://github.com/Monkydot/ucp-ready/issues/2),
+[exercising a live checkout/order flow](https://github.com/Monkydot/ucp-ready/issues/3),
+and [cryptographic verification of a live AP2 mandate](https://github.com/Monkydot/ucp-ready/issues/4)
+— this tool checks that AP2 support is *declared* correctly, not that a real
+transaction's signature verifies.
+
+## Need help getting your store agentic-ready?
+
+`ucp-ready` is built and maintained by [Monkydot](https://monkydot.com), a
+software house building e-commerce systems. If you want a full audit,
+hands-on implementation of UCP/AP2 support, or a custom agentic-commerce
+integration for your store, [get in touch](https://monkydot.com).
 
 ## Contributing
 
