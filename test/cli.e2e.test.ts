@@ -78,6 +78,26 @@ async function runCli(args: string[]): Promise<{ code: number; stdout: string }>
 }
 
 describe('ucp-ready CLI (end-to-end)', () => {
+  it('dist/cli.js has the executable bit set', () => {
+    // tsc does not preserve/set the executable bit on emitted files, so a
+    // packed npm tarball can silently ship a non-executable bin target —
+    // `npx ucp-ready` then fails with "Permission denied" despite `node
+    // dist/cli.js` working fine. Regression coverage for that failure.
+    const mode = fs.statSync(CLI_PATH).mode;
+    expect(mode & 0o111).not.toBe(0);
+  });
+
+  // Only `execFile`-ing the path directly (not `node <path>`) actually goes
+  // through the OS's shebang + execute-bit resolution, the same way `npx`
+  // and a global install invoke it. Not supported on Windows.
+  it.skipIf(process.platform === 'win32')(
+    'is directly executable via its shebang, the way npx invokes it',
+    async () => {
+      const { stdout } = await execFileAsync(CLI_PATH, ['--version']);
+      expect(stdout.trim()).toMatch(/^\d+\.\d+\.\d+$/);
+    },
+  );
+
   let cert: Cert;
   let server: https.Server | undefined;
 

@@ -1,6 +1,6 @@
 {
   "name": "ucp-ready",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Open-source readiness checker for agentic commerce: audits a store's UCP + AP2 compliance",
   "type": "module",
   "license": "MIT",
@@ -36,6 +36,7 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "postbuild": "node scripts/make-cli-executable.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint . --max-warnings 0",
