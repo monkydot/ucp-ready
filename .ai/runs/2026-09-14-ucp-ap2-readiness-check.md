@@ -114,6 +114,8 @@ https://ucp.dev/latest/specification/payment/extensions/ap2-mandates/).
 
 ## Progress
 
+PR: #1
+
 > Convention: `- [ ]` pending, `- [x]` done. Append ` — <commit sha>` when a step lands. Do not rename step titles.
 
 ### Phase 1: Core types & UCP profile fetcher
