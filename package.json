@@ -1,0 +1,53 @@
+{
+  "name": "ucp-ready",
+  "version": "0.1.0",
+  "description": "Open-source readiness checker for agentic commerce: audits a store's UCP + AP2 compliance",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Monkydot/ucp-ready.git"
+  },
+  "homepage": "https://github.com/Monkydot/ucp-ready",
+  "bugs": "https://github.com/Monkydot/ucp-ready/issues",
+  "keywords": [
+    "ucp",
+    "ap2",
+    "agentic-commerce",
+    "ecommerce",
+    "compliance"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "ucp-ready": "./dist/cli.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint . --max-warnings 0",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "@types/node": "^22.10.2",
+    "eslint": "^9.13.0",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.1",
+    "vitest": "^5.0.0"
+  }
+}
